@@ -204,9 +204,9 @@ MOBILITY = Box("light_blue_shulker_box", [
     It("water_bucket"), It("lava_bucket"), It("powder_snow_bucket"),
     It("obsidian", 64), It("crying_obsidian", 64), It("ender_chest", 8),
     It("respawn_anchor", 4), It("glowstone", 64),
-    It("white_bed", 8), It("scaffolding", 64), It("ladder", 64),
+    It("white_bed"), It("scaffolding", 64), It("ladder", 64),
     It("cobweb", 64), It("slime_block", 64), It("honey_block", 64),
-    It("oak_boat", 8), It("minecart", 8), It("rail", 64),
+    It("oak_boat"), It("minecart"), It("rail", 64),
     It("twisting_vines", 64), It("hay_block", 64),
 ])
 
@@ -214,7 +214,7 @@ FOOD_BLOCKS = Box("brown_shulker_box", [
     It("enchanted_golden_apple", 64), It("enchanted_golden_apple", 64),
     It("golden_apple", 64), It("golden_carrot", 64), It("cooked_beef", 64),
     It("cooked_porkchop", 64), It("bread", 64), It("milk_bucket"),
-    It("cake", 8), It("honey_bottle", 16), It("dried_kelp_block", 64),
+    It("cake"), It("honey_bottle", 16), It("dried_kelp_block", 64),
     It("obsidian", 64), It("netherite_block", 64), It("iron_block", 64),
     It("gold_block", 64), It("diamond_block", 64), It("emerald_block", 64),
     It("cobblestone", 64), It("dirt", 64), It("sand", 64), It("gravel", 64),
@@ -250,17 +250,13 @@ GROUND = [b for _, b in ALL if b not in ENDER]
 # ---------------------------------------------------------------- write out
 shutil.rmtree(OUT, ignore_errors=True)
 os.makedirs(FN)
-os.makedirs(os.path.join(DP, "data", NS, "predicate"))
 
 with open(os.path.join(DP, "pack.mcmeta"), "w") as f:
     json.dump({"pack": {
         "description": "Full max gear / potion / book kit",
         "pack_format": 61,
-        "supported_formats": {"min_inclusive": 26, "max_inclusive": 200}}}, f, indent=2)
-
-with open(os.path.join(DP, "data", NS, "predicate", "above_bedrock.json"), "w") as f:
-    json.dump({"condition": "minecraft:location_check",
-               "predicate": {"position": {"y": {"min": -60.0}}}}, f, indent=2)
+        "supported_formats": {"min_inclusive": 26, "max_inclusive": 200},
+        "min_format": 26, "max_format": 200}}, f, indent=2)
 
 lines_txt = []
 
@@ -284,11 +280,14 @@ for idx, b in enumerate(GROUND):
         % (dx - 4, 15 + dz, NS, idx))
     # per-box scan-down function
     w("g%02d" % idx, [
-        "# fall to the first solid block below, then place the box on top of it",
-        "execute if block ~ ~-1 ~ #minecraft:replaceable if predicate %s:above_bedrock "
-        "positioned ~ ~-1 ~ run function %s:g%02d" % (NS, NS, idx),
+        "# Place the box if the block below is solid, otherwise fall one block and try again.",
+        "# The placing line comes first: after the fall returns, a box sits below every",
+        "# level above it, and a check at that point would stack a box on each one.",
+        "# Below the world both checks fail, so nothing is placed and the fall ends.",
         "execute unless block ~ ~-1 ~ #minecraft:replaceable "
         "run setblock ~ ~ ~ %s replace" % b.block_form(),
+        "execute if block ~ ~-1 ~ #minecraft:replaceable "
+        "positioned ~ ~-1 ~ run function %s:g%02d" % (NS, idx),
     ])
 place_lines.append('tellraw @s {"text":"Shulker platziert, 15 Bloecke vor dir.","color":"green"}')
 w("place", place_lines)

@@ -5,6 +5,8 @@
     "supported_formats": {
       "min_inclusive": 26,
       "max_inclusive": 200
-    }
+    },
+    "min_format": 26,
+    "max_format": 200
   }
 }

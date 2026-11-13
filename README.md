@@ -13,8 +13,8 @@ The generated datapack is checked in, so you can use it without running Python.
 | Books | 2 | All 40 enchantments at their highest level, plus 14 spare books of the ones you apply most. |
 | Totems | 1 | 27 totems. They do not stack, so each takes a slot. |
 | Rockets | 1 | 27 stacks of 64, which is 1728 rockets with flight duration 3. |
-| Mobility | 1 | Ender pearls, chorus fruit, wind charges, an elytra with rockets, buckets, obsidian, ender chests, respawn anchors, beds, scaffolding, boats, minecarts and rails. |
-| Food and blocks | 1 | Golden apples, golden carrots, meat, cake, and building blocks from cobblestone to netherite. |
+| Mobility | 1 | Ender pearls, chorus fruit, wind charges, an elytra with rockets, buckets, obsidian, ender chests, respawn anchors, a bed, scaffolding, a boat, a minecart and rails. |
+| Food and blocks | 1 | Golden apples, golden carrots, meat, a cake, and building blocks from cobblestone to netherite. |
 | Station | 1 | Five beacons with 192 netherite blocks, conduits, anvils, an enchanting and a smithing table, a brewing set-up and experience bottles. |
 | Tipped arrows | 2 | All 42 potion types as arrows, 64 each. |
 
@@ -64,9 +64,15 @@ If you would rather not install a datapack, `out/commands.txt` holds every comma
 
 `out/` uses the item component syntax of Minecraft 1.21.5 and later.
 
-`out_legacy/` is for 1.20.5 to 1.21.4. The contents are the same. Only the way enchantments are written differs.
+`out_legacy/` is for 1.21 to 1.21.4. The contents are the same. Only the way enchantments are written differs.
 
 If the game answers with `Expected value` or `Unknown component`, try the other folder.
+
+## What is tested
+
+I ran both folders on plain servers without mods: `out/` on 1.21.11 and 26.3, `out_legacy/` on 1.21.
+
+On each one the datapack loaded without an error. A test player then ran `gearkit:all` and `gearkit:give_all`. Afterwards the ender chest held 6 boxes, 23 boxes stood on the ground, one on each spot, and the inventory held 29.
 
 ## Build it again
 
@@ -79,8 +85,9 @@ The first line writes `out/`, the second writes `out_legacy/`. The script uses o
 
 ## What I have not verified
 
-- `sweeping_edge` may have a different name in newer game versions. If a line fails because of it, only the sword is affected.
-- `pack_format` is set to 61. If the game complains about the pack version, put in the number it names in the message.
+- The versions between the tested ones: 1.21.1 to 1.21.10, and 26.1 and 26.2.
+- 1.20.5 and 1.20.6. They use the same item syntax as `out_legacy/`, but they look for functions in a folder called `functions`, so the datapack will most likely not load there as it is.
+- Playing with a real game client. The test player was a bot.
 
 The two messages the datapack prints in the chat are in German.
 
