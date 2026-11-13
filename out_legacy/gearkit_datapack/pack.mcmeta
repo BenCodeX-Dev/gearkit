@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "Full max gear / potion / book kit",
+    "pack_format": 61,
+    "supported_formats": {
+      "min_inclusive": 26,
+      "max_inclusive": 200
+    }
+  }
+}
