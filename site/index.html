@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gearkit: what is in the boxes</title>
+<meta name="description" content="Look inside the 29 shulker boxes that the Gearkit datapack for Minecraft hands out.">
+<style>
+:root {
+  --night: #2a3562;
+  --deep: #1c2346;
+  --pit: #141a36;
+  --line: #3c4a86;
+  --slate: #a4acc9;
+  --paper: #eceef7;
+  --gold: #f5b93a;
+  --glow: #ffd778;
+  --grass: #6fa055;
+  --soil: #4e8040;
+  --u: clamp(38px, 11.5vw, 58px);
+  --lift: 14px;
+}
+* { box-sizing: border-box; }
+html { background: var(--night); color: var(--paper); }
+body {
+  margin: 0;
+  font: 17px/1.5 "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+a { color: var(--glow); text-underline-offset: 3px; }
+a:hover { color: #fff; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .92em; }
+
+.page { max-width: 1060px; margin: 0 auto; padding: 0 20px 64px; }
+
+header { position: relative; padding: 56px 0 28px; }
+.stars { position: absolute; top: 0; left: 0; width: 4px; height: 4px; color: #6c7594;
+  box-shadow: 40px 30px, 190px 18px, 330px 64px, 470px 26px, 610px 78px, 760px 22px, 880px 58px, 990px 34px,
+    120px 96px #56608a, 700px 110px #56608a; }
+h1 { margin: 0 0 18px; font-size: 44px; line-height: 1; letter-spacing: .02em; }
+h1 svg { display: block; width: min(100%, 330px); height: auto; }
+.lede { max-width: 34em; margin: 0; font-size: 19px; }
+
+h2 { margin: 0 0 2px; font-size: 21px; line-height: 1.25; }
+h2 + p { margin: 0 0 14px; color: var(--slate); }
+
+.layout { display: grid; gap: 40px; align-items: start; }
+@media (min-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 56px; }
+  #inside { position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow: auto; }
+  .back { display: none; }
+}
+
+/* the boxes */
+.row { display: grid; margin: 0 0 34px; padding: 0; list-style: none; }
+.chest { grid-template-columns: repeat(6, 1fr); background: var(--pit); border: 4px solid var(--line); }
+.field { grid-template-columns: repeat(5, 1fr); }
+.spot {
+  position: relative; display: block; width: 100%; margin: 0; border: 0; background: none;
+  padding: calc(var(--lift) + 8px) 2px 8px; color: inherit; font: inherit; cursor: pointer; text-align: center;
+}
+.chest li + li { border-left: 2px solid var(--line); }
+.field .spot::before {
+  content: ""; position: absolute; left: 0; right: 0; height: 8px;
+  top: calc(var(--lift) + 8px + var(--u) * .9);
+  background: linear-gradient(var(--grass) 50%, var(--soil) 50%);
+}
+.field .spot { padding-bottom: 14px; }
+.crate {
+  position: relative; display: block; width: var(--u); height: calc(var(--u) * .9); margin: 0 auto;
+  background: color-mix(in srgb, var(--dye), #000 60%);
+}
+.crate i, .crate b { position: absolute; left: 0; right: 0; box-shadow: inset calc(var(--u) * -.1) 0 0 rgba(0, 0, 0, .2); }
+.crate i { top: 0; height: 47%;
+  background: linear-gradient(color-mix(in srgb, var(--dye), #fff 34%) 46%, var(--dye) 46%);
+  transition: transform .12s steps(3); }
+.crate b { bottom: 0; height: 48%; background: var(--dye); }
+.crate::after { content: ""; position: absolute; left: 42%; width: 16%; top: 36%; height: 30%; background: var(--gold); }
+.spot[aria-pressed="true"] .crate { background: var(--glow); }
+.spot[aria-pressed="true"] .crate i { transform: translateY(calc(var(--lift) * -1)); }
+.spot[aria-pressed="true"] .crate::after { top: 52%; height: 16%; }
+.spot:hover .crate i { transform: translateY(-4px); }
+.spot[aria-pressed="true"]:hover .crate i { transform: translateY(calc(var(--lift) * -1)); }
+.label { display: block; margin-top: 14px; font-size: 12.5px; line-height: 1.25; color: var(--slate); }
+.field .label { margin-top: 20px; }
+.spot[aria-pressed="true"] .label { color: var(--paper); }
+@media (prefers-reduced-motion: reduce) { .crate i { transition: none; } }
+
+/* the open box */
+#inside { background: var(--deep); border: 4px solid var(--line); padding: 20px 22px 22px; scroll-margin-top: 12px; }
+#inside h2 { font-size: 26px; }
+.where { margin: 0 0 14px; color: var(--slate); }
+.slots { display: grid; grid-template-columns: repeat(9, 14px); gap: 3px; margin: 0 0 6px; }
+.slots span { height: 14px; border: 2px solid var(--line); }
+.slots .full { background: var(--dye); border-color: transparent; }
+.used { margin: 0 0 16px; font-size: 14px; color: var(--slate); }
+.items { margin: 0; padding: 0; list-style: none; }
+.items li { display: grid; grid-template-columns: 4.6em 1fr; gap: 0 12px; padding: 7px 0; border-top: 2px solid var(--line); }
+.items .n { color: var(--glow); font-variant-numeric: tabular-nums; text-align: right; }
+.items small { display: block; font-size: 14px; color: var(--slate); }
+.back { display: inline-block; margin-top: 18px; }
+
+/* below */
+.notes { display: grid; gap: 28px 56px; margin-top: 56px; padding-top: 30px; border-top: 4px solid var(--line); }
+@media (min-width: 760px) { .notes { grid-template-columns: 1fr 1fr; } }
+.notes h2 { margin-bottom: 8px; }
+.notes p { margin: 0 0 12px; max-width: 34em; }
+pre { margin: 0 0 12px; padding: 12px 14px; background: var(--pit); border-left: 4px solid var(--gold); overflow-x: auto; }
+footer { margin-top: 44px; font-size: 14px; color: var(--slate); max-width: 44em; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="stars" aria-hidden="true"></div>
+    <h1 id="title">Gearkit</h1>
+    <p class="lede">A datapack for Minecraft. One command puts 29 shulker boxes of fully enchanted gear, potions, books and supplies in front of you. Pick a box to look inside.</p>
+  </header>
+
+  <div class="layout">
+    <div>
+      <h2>In your ender chest</h2>
+      <p>Six boxes, in slots 0 to 5.</p>
+      <ul class="row chest" id="chest"></ul>
+
+      <h2>On the ground</h2>
+      <p>23 boxes, 15 blocks in front of you, five to a row.</p>
+      <ul class="row field" id="field"></ul>
+    </div>
+
+    <section id="inside" aria-live="polite">
+      <noscript>The list of contents needs JavaScript. The same list is in the README on GitHub.</noscript>
+    </section>
+  </div>
+
+  <div class="notes">
+    <div>
+      <h2>Get it</h2>
+      <p>Download the datapack from <a href="https://modrinth.com/datapack/gearkit">Modrinth</a>. The generator and its output are on <a href="https://github.com/BenCodeX-Dev/gearkit">GitHub</a>, under the MIT licence.</p>
+      <p>Take <code>gearkit-1.0.0</code> for Minecraft 1.21.5 and later, and <code>gearkit-1.0.0-legacy</code> for 1.21 to 1.21.4. I tested them on plain servers running 1.21, 1.21.11 and 26.3.</p>
+    </div>
+    <div>
+      <h2>Run it</h2>
+      <p>Put the zip into the <code>datapacks</code> folder of your world. You need cheats switched on, or operator rights on a server.</p>
+      <pre>/reload
+/function gearkit:all</pre>
+      <p><code>/function gearkit:give_all</code> puts all 29 boxes into your inventory instead. It has to be almost empty for that.</p>
+    </div>
+    <div>
+      <h2>The rules</h2>
+      <p>Every enchantment is at its vanilla maximum and never above it. Fire Aspect and Flame are left out.</p>
+      <p>Enchantments that cannot share an item are split over two: a bow with Infinity and one with Mending, a pickaxe with Fortune and one with Silk Touch, and so on.</p>
+    </div>
+  </div>
+
+  <footer>
+    The lists on this page are written by a script from the same definitions that build the datapack.
+    Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+  </footer>
+</div>
+
+<script src="boxes.js"></script>
+<script>
+(function () {
+  var DYES = {
+    white: "#e9ecec", light_gray: "#9d9d97", gray: "#5a6468", black: "#2b2b30", brown: "#835432",
+    red: "#b02e26", orange: "#f9801d", yellow: "#fed83d", lime: "#80c71f", green: "#5e7c16",
+    cyan: "#169c9c", light_blue: "#3ab3da", blue: "#4a55c4", purple: "#8932b8", magenta: "#c74ebd", pink: "#f38baa"
+  };
+  var ROMAN = ["", "", "II", "III", "IV", "V"];
+  var FORMS = { potion: "Potion", splash_potion: "Splash potion", lingering_potion: "Lingering potion", tipped_arrow: "Tipped arrow" };
+
+  // title in the same pixel grid as the icon
+  var LETTERS = {
+    G: ".###.#...##....#.####...##...#.###.", E: "######....#....####.#....#....#####",
+    A: ".###.#...##...#######...##...##...#", R: "####.#...##...#####.#.#..#..#.#...#",
+    K: "#...##..#.#.#..##...#.#..#..#.#...#", I: "#####..#....#....#....#....#..#####",
+    T: "#####..#....#....#....#....#....#.."
+  };
+  var title = document.getElementById("title"), word = "GEARKIT", rects = "";
+  word.split("").forEach(function (ch, at) {
+    LETTERS[ch].split("").forEach(function (px, i) {
+      if (px !== "#") return;
+      var x = at * 6 + i % 5, y = Math.floor(i / 5);
+      rects += '<rect x="' + x + '" y="' + y + '" width="1.04" height="1.04" fill="' + (y === 6 ? "#f5b93a" : "#eceef7") + '"/>';
+    });
+  });
+  title.innerHTML = '<svg viewBox="0 0 41.04 7.04" role="img" aria-label="Gearkit">' + rects + "</svg>";
+
+  var boxes = window.BOXES || [];
+  var inside = document.getElementById("inside");
+  var buttons = [];
+  var enderSlot = 0;
+
+  function words(id) { var s = id.replace(/_/g, " "); return s.charAt(0).toUpperCase() + s.slice(1); }
+  function enchants(map) {
+    return Object.keys(map).map(function (k) {
+      var name = k.split("_").map(function (w) { return w === "of" ? w : w.charAt(0).toUpperCase() + w.slice(1); }).join(" ");
+      return name + (map[k] > 1 ? " " + ROMAN[map[k]] : "");
+    }).join(", ");
+  }
+  function effect(p) {
+    if (p.indexOf("strong_") === 0) return p.slice(7).replace(/_/g, " ") + " II";
+    if (p.indexOf("long_") === 0) return p.slice(5).replace(/_/g, " ") + ", long";
+    return p.replace(/_/g, " ");
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  function boxName(b) { return b.name + (b.of > 1 ? " " + b.nr : ""); }
+
+  function show(i, jump) {
+    var b = boxes[i];
+    buttons.forEach(function (btn, j) { btn.setAttribute("aria-pressed", j === i ? "true" : "false"); });
+    var rows = b.items.map(function (it) {
+      var stacks = it.k || 1;
+      var count = stacks > 1 && it.n > 1 ? stacks + " × " + it.n : stacks > 1 ? stacks + " ×" : it.n > 1 ? it.n + " ×" : "";
+      var name = it.p ? (FORMS[it.id] || words(it.id)) + ": " + effect(it.p) : words(it.id);
+      var detail = it.e ? enchants(it.e) : it.s ? enchants(it.s) : it.x || "";
+      return '<li><span class="n">' + count + "</span><span>" + esc(name) + (detail ? "<small>" + esc(detail) + "</small>" : "") + "</span></li>";
+    }).join("");
+    var slots = "";
+    for (var s = 0; s < 27; s++) slots += '<span class="' + (s < b.slots ? "full" : "") + '"></span>';
+    inside.style.setProperty("--dye", DYES[b.dye]);
+    inside.innerHTML =
+      "<h2>" + esc(boxName(b)) + (b.of > 1 ? " of " + b.of : "") + "</h2>" +
+      '<p class="where">' + (b.note ? esc(words(b.note)) + ". " : "") +
+        (b.ender ? "Goes into your ender chest, slot " + b.enderSlot + "." : "Placed on the ground.") + "</p>" +
+      '<div class="slots" aria-hidden="true">' + slots + "</div>" +
+      '<p class="used">' + b.slots + " of 27 slots used</p>" +
+      '<ul class="items">' + rows + "</ul>" +
+      '<a class="back" href="#chest">Back to the boxes</a>';
+    inside.scrollTop = 0;
+    if (jump && window.matchMedia("(max-width: 899px)").matches) inside.scrollIntoView();
+  }
+
+  boxes.forEach(function (b, i) {
+    if (b.ender) b.enderSlot = enderSlot++;
+    var li = document.createElement("li");
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "spot";
+    btn.style.setProperty("--dye", DYES[b.dye]);
+    btn.innerHTML = '<span class="crate"><i></i><b></b></span><span class="label">' + esc(boxName(b)) + "</span>";
+    btn.addEventListener("click", function () { show(i, true); });
+    li.appendChild(btn);
+    document.getElementById(b.ender ? "chest" : "field").appendChild(li);
+    buttons.push(btn);
+  });
+  if (boxes.length) show(0, false);
+})();
+</script>
+</body>
+</html>
