@@ -20,6 +20,8 @@ The generated datapack is checked in, so you can use it without running Python.
 
 The ten gear boxes come in six variants. They differ in the protection type on the armour and the damage type on the weapons.
 
+To see every item in every box without starting the game, open the [box viewer](https://huggingface.co/spaces/BenCodeXYZ/gearkit). It is a single page, and its source is in `site/`.
+
 ## Rules the generator follows
 
 Every enchantment is at its vanilla maximum, never above it. Protection is IV, Sharpness is V, and so on.
@@ -82,6 +84,8 @@ LEGACY=1 python3 gen.py
 ```
 
 The first line writes `out/`, the second writes `out_legacy/`. The script uses only the Python standard library. Running it reproduces the checked-in files exactly.
+
+`python3 site/export.py` writes `site/boxes.js`, the list the box viewer shows. It reads the same definitions in `gen.py` and leaves `out/` and `out_legacy/` alone.
 
 ## What I have not verified
 
